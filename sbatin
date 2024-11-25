@@ -1,0 +1,40 @@
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+from cryptography.fernet import Fernet
+import os
+import time
+import shutil
+import base64
+
+def generate_key():
+    """
+    Generates a new encryption key and saves it to a file.
+    """
+    key = Fernet.generate_key()
+    with open("secret.key", "wb") as key_file:
+        key_file.write(key)
+
+def load_key():
+    """
+    Loads the encryption key from the file.
+    """
+    try:
+        with open("secret.key", "rb") as key_file:
+            key = key_file.read()
+        return key
+    except FileNotFoundError:
+        return None
+
+# ... (rest of your functions)
+
+# Tkinter GUI
+window = tk.Tk()
+# ... (GUI elements)
+
+# Generate key if it doesn't exist
+if not load_key():
+    generate_key()
+
+key = load_key()  # Load the key
+
+window.mainloop()
